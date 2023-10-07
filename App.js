@@ -1,20 +1,73 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import LatestMoviesScreen from './screens/LatestMoviesScreen';
+import MovieDetailsScreen from './screens/MovieDetailsScreen';
+import TicketBookingScreen from './screens/TicketBookingScreen';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
-export default function App() {
+const Stack = createStackNavigator();
+
+const App = () => {
+  const [searchText, setSearchText] = useState('');
+
+
+  // Update the filteredMovies whenever the searchText changes
+
+  const handleSearch = (e) => {
+    console.log(e)
+    setSearchText(e)
+  };
+
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{
+        headerStyle: {
+          backgroundColor: 'skyblue',
+        },
+      }} initialRouteName="LatestMovies">
+        <Stack.Screen name="LatestMovies" options={{
+          headerTitle: () => <Text style={styles.title}>E-Cube</Text>,
+          headerRight: () => <View style={styles.searchContainer}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search..."
+              value={searchText}
+              onChangeText={(text) => setSearchText(text)}
+              onBlur={handleSearch}
+              onSubmitEditing={handleSearch}
+            />
+          </View>
+        }}>
+          {() => <LatestMoviesScreen  searchText={searchText}  />}
+        </Stack.Screen>
+        <Stack.Screen name="MovieDetails" component={MovieDetailsScreen} />
+        <Stack.Screen name="TicketBooking" component={TicketBookingScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  searchContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+  },
+  searchInput: {
+    flex: 0.7,
+    marginLeft: 8,
+    borderWidth: 1,
+    borderRadius: 8,
+    margin: 9,
+    paddingLeft: 10,
+    backgroundColor: 'white',
   },
 });
+
+export default App;
