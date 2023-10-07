@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "ECube",
-    "slug": "ECube",
+    "slug": "ecube",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "185c6722-b7de-4033-8232-3b5799680a30"
+      }
+    },
+    "owner": "mahesh54"
   }
 }
