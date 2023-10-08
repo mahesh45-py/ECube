@@ -32,9 +32,26 @@ const MovieDetailsScreen = ({ route, navigation }) => {
           />
         </View>
         <View style={styles.detailsContainer}>
-          <Text style={styles.movieTitle}>{movie.name}</Text>
+            <View style={{flexDirection:'row', justifyContent:'space-between'}} >
+            <Text style={styles.movieTitle}>{movie.name}</Text>
+            <Text style={styles.movieTitle}> 09-10-2023</Text>
+            </View>
+          
           {movieDetails ? (
             <>
+            <ListItem>
+                <Icon name="schedule" />
+                <ListItem.Content>
+                  <ListItem.Title>Duration: 2h 30mins</ListItem.Title>
+                </ListItem.Content>
+              </ListItem>
+              <ListItem>
+                <Icon name="star" />
+                <ListItem.Content>
+                  <ListItem.Title>Ratings: {movieDetails.rate}/5</ListItem.Title>
+                </ListItem.Content>
+              </ListItem>
+              
               <ListItem>
                   <Icon name="local-movies" />
                   <ListItem.Content>
@@ -47,12 +64,7 @@ const MovieDetailsScreen = ({ route, navigation }) => {
                     <ListItem.Title>Language: {movieDetails.language}</ListItem.Title>
                   </ListItem.Content>
                 </ListItem>
-              <ListItem>
-                <Icon name="star" />
-                <ListItem.Content>
-                  <ListItem.Title>Ratings: {movieDetails.rate}/5</ListItem.Title>
-                </ListItem.Content>
-              </ListItem>
+             
               <Button
             title="Book Now"
             onPress={() => navigation.navigate('TicketBooking', { movie: movieDetails })}

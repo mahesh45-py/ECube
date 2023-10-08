@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, Image } from 'react-native';
 import { Input, Card, Overlay } from 'react-native-elements'; // Import Overlay component
+import QRCODE from './QRCODE';
+
 
 const TicketBookingScreen = ({ route, navigation }) => {
     const { movie } = route.params;
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [numberOfTickets, setNumberOfTickets] = useState('');
+    const [productQRref, setProductQRref] = useState();
     const [isConfirmed, setIsConfirmed] = useState(false);
     const [isOverlayVisible, setOverlayVisible] = useState(false); // Control the visibility of the overlay
 
@@ -73,10 +76,14 @@ const TicketBookingScreen = ({ route, navigation }) => {
                     <View style={styles.overlayContent}>
                         <Text style={styles.overlayText}>Your booking is confirmed! Enjoy the movie.</Text>
 
-                        <Image
-                            source={{ uri: 'https://support.thinkific.com/hc/article_attachments/360042081334/5d37325ea1ff6.png' }}
-                            style={styles.qrCode}
-                        />
+                        <QRCODE
+                            value={JSON.stringify({
+                                name: name,
+                                email: email,
+                                movie: movie.name,
+                                numberOfTickets:numberOfTickets
+                            })}
+                            getRef={(c) => setProductQRref(c)} />
                         <Text style={styles.overlayText}>Scan this QR code at the entrance.</Text>
                         <Button
                             title="Close"
